@@ -1,0 +1,8 @@
+# This file was automatically generated
+name: dvdrental
+type: postgres
+options:
+  host: 127.0.0.1
+  port: 5433
+  database: dvdrental
+  schema: public
