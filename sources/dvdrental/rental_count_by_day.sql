@@ -1,0 +1,1 @@
+select  DATE(rental_date), count(*) from rental group by DATE(rental_date) order by  DATE(rental_date)

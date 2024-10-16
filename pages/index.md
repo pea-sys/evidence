@@ -1,56 +1,81 @@
 ---
-title: Welcome to Evidence
+title: DVD Rental Summary
+
 ---
 
-<Details title='How to edit this page'>
-
-  This page can be found in your project at `/pages/index.md`. Make a change to the markdown file and save it to see the change take effect in your browser.
-</Details>
-
-```sql categories
-  select
-      category
-  from needful_things.orders
-  group by category
+```sql total_customer
+select * from dvdrental.total_customer
 ```
 
-<Dropdown data={categories} name=category value=category>
-    <DropdownOption value="%" valueLabel="All Categories"/>
-</Dropdown>
+<BigValue 
+  data={total_customer} 
+  value=total_customer
+  comparisonTitle="Total customer"
+/>
 
-<Dropdown name=year>
-    <DropdownOption value=% valueLabel="All Years"/>
-    <DropdownOption value=2019/>
-    <DropdownOption value=2020/>
-    <DropdownOption value=2021/>
-</Dropdown>
 
-```sql orders_by_category
-  select 
-      date_trunc('month', order_datetime) as month,
-      sum(sales) as sales_usd,
-      category
-  from needful_things.orders
-  where category like '${inputs.category.value}'
-  and date_part('year', order_datetime) like '${inputs.year.value}'
-  group by all
-  order by sales_usd desc
+```sql customer_count_by_country
+select * from dvdrental.customer_count_by_country
 ```
 
 <BarChart
-    data={orders_by_category}
-    title="Sales by Month, {inputs.category.label}"
-    x=month
-    y=sales_usd
-    series=category
+    data={customer_count_by_country}
+    x=country
+    y=count
+    series=country
+    title="Customer by Country TOP 10"
+    colorPalette={[
+        '#cf0d06',
+        '#eb5752',
+        '#e88a87',
+        '#fcdad9',
+        ]}
+>
+<ReferenceLine y=30 bold=true align="center" label="mean" hideValue labelPosition="aboveStart" color=green/>
+</BarChart>
+
+
+```sql total_sales
+select * from dvdrental.total_sales
+```
+
+<BigValue 
+  data={total_sales} 
+  value=total_sales
+  comparisonTitle="Total sales"
 />
 
-## What's Next?
-- [Connect your data sources](settings)
-- Edit/add markdown files in the `pages` folder
-- Deploy your project with [Evidence Cloud](https://evidence.dev/cloud)
 
-## Get Support
-- Message us on [Slack](https://slack.evidence.dev/)
-- Read the [Docs](https://docs.evidence.dev/)
-- Open an issue on [Github](https://github.com/evidence-dev/evidence)
+```sql sales_by_film_category
+select * from dvdrental.sales_by_film_category
+```
+
+<BarChart 
+    data={sales_by_film_category}
+    x=category
+    y=total_sales
+    series=category
+    title="Sales by Category"
+/>
+
+```sql sales_by_day
+select * from dvdrental.sales_by_day
+```
+
+<BarChart 
+    data={sales_by_day} 
+    title="Sales by Day"
+    x=date
+    y=sum 
+/>
+
+```sql rental_count_by_day
+select * from dvdrental.rental_count_by_day
+```
+
+<BarChart 
+    data={rental_count_by_day} 
+    title="Rental by Day"
+    x=date
+    y=count
+/>

@@ -1,0 +1,1 @@
+SELECT country, count(id) FROM customer_list group by country order by count desc limit 10;

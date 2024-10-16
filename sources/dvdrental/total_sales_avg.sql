@@ -1,0 +1,1 @@
+SELECT avg(total_sales) as total_sales_avg FROM sales_by_film_category
